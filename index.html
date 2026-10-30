@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pomodoro Timer</title>
+<title>Pomodoro Timer – Free Online Focus Timer</title>
+<meta name="description" content="Free online Pomodoro timer with 25-minute focus sessions, short and long breaks, and custom lengths. No signup. Works on phone and desktop.">
+<link rel="canonical" href="https://pomodoro.web.id/">
+<meta name="theme-color" content="#D4382A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%85%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pomodoro Timer – Free Online Focus Timer">
+<meta property="og:description" content="A clean Pomodoro timer with focus sessions, short breaks and long breaks.">
+<meta property="og:url" content="https://pomodoro.web.id/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Pomodoro Timer","url":"https://pomodoro.web.id/","description":"Free online Pomodoro timer with focus sessions, short breaks and long breaks.","applicationCategory":"ProductivityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
@@ -27,10 +37,32 @@
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);background:var(--accent);transition:background .45s}
 body{
-  margin:0;height:100%;overflow:auto;background:var(--accent);color:var(--ink);
+  margin:0;min-height:100%;background:var(--accent);color:var(--ink);
   font-family:var(--font);transition:background .45s;
+}
+.app{
+  min-height:100vh;min-height:100svh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px 16px;
 }
+.tag{margin:0;font-size:.95rem;font-weight:400;color:var(--ink-soft);text-align:center}
+.faq-btn{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:20;border:2px solid var(--ink);background:transparent;color:var(--ink);font-weight:600;padding:9px 18px;border-radius:999px;cursor:pointer}
+.faq-btn:hover{background:var(--ink);color:var(--accent)}
+.curtain{position:fixed;inset:0;z-index:30;overflow-y:auto;overscroll-behavior:contain;
+  background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--accent);
+  transform:translateY(-100%);visibility:hidden;
+  transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s linear .5s}
+.curtain.open{transform:none;visibility:visible;transition:transform .5s cubic-bezier(.7,0,.2,1),visibility 0s}
+.faq-inner{max-width:640px;margin:0 auto;padding:max(56px,calc(env(safe-area-inset-top,0px) + 40px)) 20px 72px;line-height:1.65;color:var(--ink-soft)}
+.faq-close{position:fixed;top:max(12px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));border:2px solid var(--ink);background:transparent;color:var(--ink);font-weight:600;padding:8px 16px;border-radius:999px;cursor:pointer}
+.faq-close:hover{background:var(--ink);color:var(--accent)}
+.faq-inner h2{font-size:clamp(1.5rem,5vw,2rem);line-height:1.15;letter-spacing:-.02em;color:var(--ink);margin:0 0 16px}
+.faq-inner h3{font-size:1.1rem;line-height:1.3;color:var(--ink);margin:30px 0 8px}
+.faq-inner h4{font-size:1rem;color:var(--ink);margin:18px 0 4px}
+.faq-inner p{margin:0 0 12px}
+.faq-inner ol{margin:0 0 12px;padding-left:1.25rem}
+.faq-inner li{margin-bottom:6px}
+.faq-inner strong{color:var(--ink)}
+html.faq-lock{overflow:hidden}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 button,input,summary{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px}
@@ -68,7 +100,7 @@ summary::-webkit-details-marker{display:none}
 </style>
 </head>
 <body>
-<h1 class="sr">Pomodoro timer</h1>
+<main class="app" aria-label="Pomodoro timer">
 
 <div class="tabs" role="group" aria-label="Timer mode">
   <button data-m="focus" aria-pressed="true">Focus</button>
@@ -107,6 +139,40 @@ summary::-webkit-details-marker{display:none}
   </div>
 </details>
 
+<h1 class="tag">Free online Pomodoro timer</h1>
+
+</main>
+
+<button class="faq-btn" id="faqBtn" type="button" aria-expanded="false" aria-controls="faq">FAQ</button>
+
+<div class="curtain" id="faq" role="dialog" aria-modal="true" aria-labelledby="faqTitle" inert>
+  <button class="faq-close" id="faqClose" type="button">Close</button>
+  <div class="faq-inner">
+    <h2 id="faqTitle">About this Pomodoro timer</h2>
+    <p>This is a free online Pomodoro timer for focused work and study. Press start, work on one task until the timer ends, then rest. No account, no ads, and it works on phone and desktop.</p>
+
+    <h3>How to use the Pomodoro technique</h3>
+    <ol>
+      <li>Pick one task and start the <strong>Focus</strong> timer (25 minutes by default).</li>
+      <li>Work on that task only until the timer rings.</li>
+      <li>Take a <strong>short break</strong> of 5 minutes.</li>
+      <li>After four focus sessions, take a <strong>long break</strong> of 15 minutes.</li>
+      <li>Repeat. The dots under the timer show your progress in the current round.</li>
+    </ol>
+    <p>You can change every length under <strong>Timer lengths</strong>. Your choice is saved in your browser. Press <strong>Space</strong> to start or pause.</p>
+
+    <h3>Frequently asked questions</h3>
+    <h4>What is a Pomodoro timer?</h4>
+    <p>A timer for the Pomodoro technique, created by Francesco Cirillo. You split work into focused intervals, traditionally 25 minutes, separated by short breaks.</p>
+    <h4>Why 25 minutes?</h4>
+    <p>It is long enough to make progress and short enough to stay focused. Change it to fit your task, for example 50 minutes for deep work.</p>
+    <h4>Is it free?</h4>
+    <p>Yes. No signup and nothing to install.</p>
+    <h4>Does it keep running if I switch tabs?</h4>
+    <p>Yes. The tab title shows the time left so you can check it at a glance.</p>
+  </div>
+</div>
+
 <script>
 (function(){
   var LABEL={focus:'Focus',short:'Short break',long:'Long break'};
@@ -127,7 +193,7 @@ summary::-webkit-details-marker{display:none}
     bar.style.strokeDashoffset=C*(1-remaining/total);
     $('go').textContent=running?'Pause':(remaining<total?'Resume':'Start');
     $('state').textContent=running?RUN[mode]:(remaining<total?'Paused':READY[mode]);
-    document.title=(running?fmt(remaining)+' · ':'')+LABEL[mode]+' – Pomodoro';
+    document.title=running?fmt(remaining)+' · '+LABEL[mode]+' – Pomodoro Timer':'Pomodoro Timer – Free Online Focus Timer';
     document.documentElement.setAttribute('data-mode',mode);
     document.querySelectorAll('.tabs button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===mode)});
     var dots=$('dots').children;
@@ -194,7 +260,7 @@ summary::-webkit-details-marker{display:none}
   $('skip').addEventListener('click',function(){setMode(next())});
   document.querySelectorAll('.tabs button').forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset.m)})});
   document.addEventListener('keydown',function(e){
-    if(e.code==='Space'&&!/^(INPUT|BUTTON|SUMMARY)$/.test(e.target.tagName)){e.preventDefault();toggle()}
+    if(e.code==='Space'&&!document.documentElement.classList.contains('faq-lock')&&!/^(INPUT|BUTTON|SUMMARY)$/.test(e.target.tagName)){e.preventDefault();toggle()}
   });
   document.addEventListener('visibilitychange',function(){if(running&&!document.hidden)tick()});
 
@@ -210,6 +276,17 @@ summary::-webkit-details-marker{display:none}
   });
 
   render();
+})();
+</script>
+<script>
+(function(){
+var btn=document.getElementById('faqBtn'),panel=document.getElementById('faq'),close=document.getElementById('faqClose'),root=document.documentElement;
+function open(){panel.removeAttribute('inert');panel.classList.add('open');root.classList.add('faq-lock');btn.setAttribute('aria-expanded','true');panel.scrollTop=0;close.focus({preventScroll:true})}
+function shut(){panel.classList.remove('open');panel.setAttribute('inert','');root.classList.remove('faq-lock');btn.setAttribute('aria-expanded','false');btn.focus({preventScroll:true})}
+btn.addEventListener('click',open);
+close.addEventListener('click',shut);
+panel.addEventListener('click',function(e){if(e.target===panel)shut()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.classList.contains('open'))shut()});
 })();
 </script>
 </body>
